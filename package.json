@@ -1,0 +1,20 @@
+{
+  "name": "html-boilerplate",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "sass": "sass --watch src/scss/main.scss:src/css/main.css"
+  },
+  "devDependencies": {
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.7.9",
+    "gsap": "^3.12.7",
+    "sass": "^1.84.0"
+  }
+}
