@@ -1,125 +1,108 @@
-# html-boilerplate構築仕様書（2025年版）
-以下要素を構築する前準備をテンプレート化したものです。
+# HTML Boilerplate for WordPress-integrated LP
+
+このボイラープレートは、WordPressテンプレートに組み込む前提で設計されたランディングページ（LP）用のフロントエンド開発環境です。
+
+## 特徴
+
+* Viteを使用した高速ビルド & ローカル開発環境
+* SCSS構成（`reset`, `common`, `variables` による分離）
+* Google Fontsや約物フォント（YakuHanJP）に対応
+* WordPressテーマ構成を意識した出力ディレクトリ設計
+* CSS・JS・フォント・画像を `dist/assets/` 以下に整理
 
 ---
 
-## 1. レイアウト方針
+## ディレクトリ構成
 
-* **PC最大幅**：`1170px`
-* **MVセクション**：テキスト・画像のセットで比率維持のまま中央寄せ表示
-* **MV画像の扱い**：`<img>`タグで読み込み、CSSで比率拡大
-* **MV画像スライド**：2〜3枚をPC/SPで切り替えて時間でフェード（JS対応）
-
----
-
-## 2. タイポグラフィ設計
-
-* **フォントファミリー**：`"Noto Sans JP", "YakuHanJP", sans-serif`
-* **ベースサイズ**：`16px`
-* **ラージ**：`18px`、**スモール**：`14px`
-* **行間**：`1.6`
-* **ウェイト**：本文400、見出し700想定
-
----
-
-## 3. レスポンシブ設計
-
-* **SP表示**：`max-width: 430px`
-* **タブレット**：`431〜767px` → PCレイアウトを縮小してそのまま表示（専用スタイルなし）
-* **PC表示**：`768〜1440px`
-* **超ワイド表示（1441px〜）**：MVエリアのみ横に可変、他は固定中央寄せ
-
----
-
-## 4. モバイル対応ルール
-
-* **430px以下で完全1カラム化**
-* テキスト詰まりや2カラム表現は避ける
-* デザイナーにもその方針で依頼済み
-
----
-
-## 5. カラーガイドライン
-
-* **メインカラー**：`#FF5000`（MVのカロママプラス文字色）
-* **アクセントカラー**：
-
-  * オレンジ：`#FF6900`
-  * イエロー：`#FCB900`
-  * レッド：`#CF2E2E`
-* **用途**：ボタン、下線、罫線、グラデーション演出などに使用
-
----
-
-## 6. JavaScript適用箇所
-
-* ✅ MV画像スライド（フェード切替 / PC-SP画像分岐あり）
-* ✅ スクロール時のコンテンツ表示アニメーション（fade-in系）
-* ✅ スムーススクロール（アンカーリンク）
-* ✅ スクロール追従ヘッダー（要調整）
-* ✅ モーダルウィンドウ（画像クリックで拡大）
-* ❌ FAQ・タブ系は未使用、JS不要
-
----
-
-## 7. コンポーネント構成
-
-### 汎用パーツ
-
-* `.section-title`（タイトル装飾）
-* `.button`（CTA）
-* `.feature-card`（アイコン付き縦型カード）
-* `.decor-line`（罫線・グラデーション線）
-* `.zoom-on-hover`（CSSズーム）
-* `.modal-image`（クリックでモーダル開閉）
-
-### ユニークパーツ
-
-* `.mv`（スライド＋構造が特殊）
-* `.pdca`（図＋HTMLテキスト）
-* `.service-detail`（アプリ活用図：画像のみ）
-* `.step-flow`（導入ステップ：ページ専用）
-* `.voice-box`（導入事例：再利用予定なし）
-
----
-
-## 8. ディレクトリ / ファイル構成
-
-### ディレクトリ構成（WPテンプレートと同階層）
-
-```
-/wp-theme/
-├─ assets/
-│  ├─ images/
-│  ├─ js/
-│  ├─ css/
-│  └─ fonts/
+```text
+project-root/
+├── index.html              # エントリーポイント
+├── vite.config.js          # Vite設定
+├── package.json
+├── src/                    # 開発用ソース
+│   ├── assets/             # フォント・画像など
+│   │   ├── fonts/
+│   │   └── images/
+│   ├── css/                # Sassビルド出力先
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js         # メインスクリプト
+│   └── scss/
+│       ├── _reset.scss
+│       ├── _common.scss
+│       ├── _variables.scss
+│       └── main.scss       # Sassのエントリーポイント
+└── dist/                   # ビルド出力先
+    └── assets/
+        ├── css/
+        ├── js/
+        ├── fonts/
+        └── images/
 ```
 
-### SCSS構成（初期）
+---
 
-```
-scss/
-├─ _reset.scss
-├─ _common.scss
-└─ style.scss
-```
+## 使用技術
 
-> 完成後に必要に応じて `_mv.scss` や `_pdca.scss` などセクション単位で分割予定
-
-### JS構成
-
-```
-js/
-└─ main.js
-```
-
-> 必要に応じて後で分割可能（例：`modal.js`, `fade.js` など）
+* [Vite](https://vitejs.dev/) `^6.1.0`
+* Sass `^1.84.0`
+* Node.js v18 〜 v22 対応確認済み
 
 ---
 
-## 9. ベーステンプレート / 開発方針
+## コマンド一覧
 
-* 使用テンプレート：[`torucom/html-boilerplate`](https://github.com/torucom/html-boilerplate)
-* HTML + SCSS構成ベースで、WordPressテンプレートに組み込み予定
-* 最初は最小構成で開発、必要に応じてファイル分割／機能追加を行う
+```bash
+npm install       # 初期インストール
+npm run dev       # 開発用サーバー起動（ホットリロード）
+npm run build     # 本番ビルド（dist/assets/ 以下に出力）
+npm run sass      # Sassのwatchモード（style.css を出力）
+```
+
+---
+
+## 出力仕様
+
+ビルド時には以下のように `dist/assets/` 以下へ各種ファイルが出力されます：
+
+```text
+dist/
+└── assets/
+    ├── css/       # SassからビルドされたCSS
+    ├── js/        # main.jsなどのスクリプト
+    ├── fonts/     # @font-faceで使用されるwoff2など
+    └── images/    # SCSSやHTMLから参照された画像類
+```
+
+---
+
+## フォント設定（例：common.scss内）
+
+```scss
+@font-face {
+  font-family: 'YakuHanJP';
+  src: url('../assets/fonts/YakuHanJP-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --font-base: 'YakuHanJP', 'NotoSansJP', sans-serif;
+}
+
+body {
+  font-family: var(--font-base);
+}
+```
+
+---
+
+## ライセンス
+
+MIT
+
+---
+
+## 補足
+
+このテンプレートは、WordPressテーマ用の静的HTML/JS/CSSを生成するためのもので、PHPやテーマ構造は含まれていません。
