@@ -1,8 +1,2 @@
-@import "variables";
-@import "common";
-
-body {
-    font-family: Arial, sans-serif;
-    background: $bg-color;
-    color: $text-color;
-}
+@use "reset";
+@use "common";

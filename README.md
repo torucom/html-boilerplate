@@ -1,70 +1,125 @@
-# HTML Boilerplate (Vite + Vanilla JS)
+# html-boilerplate構築仕様書（2025年版）
+以下要素を構築する前準備をテンプレート化したものです。
 
-This is a modern HTML boilerplate using Vite + Vanilla JavaScript with SCSS support. It provides a fast and minimal setup for web development.
+---
 
-## 📌 Features
-- **Vite** for a fast and lightweight development environment
-- **Vanilla JavaScript** with ES Modules
-- **SCSS support** for modular styles
-- **Live reload** for quick development
-- **Pre-configured npm scripts** for development and build
+## 1. レイアウト方針
 
-## 📂 Folder Structure
-```sh
-/html-boilerplate
-│── index.html         # Main HTML file
-│── vite.config.js     # Vite configuration
-│── package.json       # Dependencies and scripts
-│── .gitignore         # Git ignore file
-│── /src
-│   │── main.js        # Main JavaScript file
-│   │── /scss
-│   │   ├── main.scss  # Main SCSS file
-│   │   ├── _variables.scss # SCSS Variables
-│   │   ├── _common.scss # Common styles
-│   │── /css
-│   │   ├── main.css (Auto-generated)
-│── /public
-│   │── favicon.ico
+* **PC最大幅**：`1170px`
+* **MVセクション**：テキスト・画像のセットで比率維持のまま中央寄せ表示
+* **MV画像の扱い**：`<img>`タグで読み込み、CSSで比率拡大
+* **MV画像スライド**：2〜3枚をPC/SPで切り替えて時間でフェード（JS対応）
+
+---
+
+## 2. タイポグラフィ設計
+
+* **フォントファミリー**：`"Noto Sans JP", "YakuHanJP", sans-serif`
+* **ベースサイズ**：`16px`
+* **ラージ**：`18px`、**スモール**：`14px`
+* **行間**：`1.6`
+* **ウェイト**：本文400、見出し700想定
+
+---
+
+## 3. レスポンシブ設計
+
+* **SP表示**：`max-width: 430px`
+* **タブレット**：`431〜767px` → PCレイアウトを縮小してそのまま表示（専用スタイルなし）
+* **PC表示**：`768〜1440px`
+* **超ワイド表示（1441px〜）**：MVエリアのみ横に可変、他は固定中央寄せ
+
+---
+
+## 4. モバイル対応ルール
+
+* **430px以下で完全1カラム化**
+* テキスト詰まりや2カラム表現は避ける
+* デザイナーにもその方針で依頼済み
+
+---
+
+## 5. カラーガイドライン
+
+* **メインカラー**：`#FF5000`（MVのカロママプラス文字色）
+* **アクセントカラー**：
+
+  * オレンジ：`#FF6900`
+  * イエロー：`#FCB900`
+  * レッド：`#CF2E2E`
+* **用途**：ボタン、下線、罫線、グラデーション演出などに使用
+
+---
+
+## 6. JavaScript適用箇所
+
+* ✅ MV画像スライド（フェード切替 / PC-SP画像分岐あり）
+* ✅ スクロール時のコンテンツ表示アニメーション（fade-in系）
+* ✅ スムーススクロール（アンカーリンク）
+* ✅ スクロール追従ヘッダー（要調整）
+* ✅ モーダルウィンドウ（画像クリックで拡大）
+* ❌ FAQ・タブ系は未使用、JS不要
+
+---
+
+## 7. コンポーネント構成
+
+### 汎用パーツ
+
+* `.section-title`（タイトル装飾）
+* `.button`（CTA）
+* `.feature-card`（アイコン付き縦型カード）
+* `.decor-line`（罫線・グラデーション線）
+* `.zoom-on-hover`（CSSズーム）
+* `.modal-image`（クリックでモーダル開閉）
+
+### ユニークパーツ
+
+* `.mv`（スライド＋構造が特殊）
+* `.pdca`（図＋HTMLテキスト）
+* `.service-detail`（アプリ活用図：画像のみ）
+* `.step-flow`（導入ステップ：ページ専用）
+* `.voice-box`（導入事例：再利用予定なし）
+
+---
+
+## 8. ディレクトリ / ファイル構成
+
+### ディレクトリ構成（WPテンプレートと同階層）
+
 ```
+/wp-theme/
+├─ assets/
+│  ├─ images/
+│  ├─ js/
+│  ├─ css/
+│  └─ fonts/
 ```
 
-## 🚀 Quick Start
+### SCSS構成（初期）
 
-### 1. Clone the repository
-```sh
-git clone https://github.com/your-username/html-boilerplate.git
-cd html-boilerplate
+```
+scss/
+├─ _reset.scss
+├─ _common.scss
+└─ style.scss
 ```
 
-### 2. Install dependencies
-```sh
-npm install
+> 完成後に必要に応じて `_mv.scss` や `_pdca.scss` などセクション単位で分割予定
+
+### JS構成
+
+```
+js/
+└─ main.js
 ```
 
-### 3. Start the development server
-```sh
-npm run dev
-```
+> 必要に応じて後で分割可能（例：`modal.js`, `fade.js` など）
 
-### 4. Compile SCSS manually (optional)
-```sh
-npm run sass
-```
+---
 
-### 5. Build for production
-```sh
-npm run build
-```
+## 9. ベーステンプレート / 開発方針
 
-## 🔧 Configuration
-
-### Vite
-The `vite.config.js` file handles the development server settings. Modify it if needed.
-
-### SCSS
-Modify styles in `src/scss/` and run `npm run sass` to compile.
-
-## 📜 License
-
-This project is licensed under the MIT License.
+* 使用テンプレート：[`torucom/html-boilerplate`](https://github.com/torucom/html-boilerplate)
+* HTML + SCSS構成ベースで、WordPressテンプレートに組み込み予定
+* 最初は最小構成で開発、必要に応じてファイル分割／機能追加を行う

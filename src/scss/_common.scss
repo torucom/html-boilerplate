@@ -1,0 +1,46 @@
+/* =============================
+   Font Face (Noto Sans JP + YakuHanJP)
+============================= */
+
+/* Regular - 約物フォント */
+@font-face {
+  font-family: 'YakuHanJP';
+  src: url('../assets/fonts/YakuHanJP-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Bold - 約物フォント */
+@font-face {
+  font-family: 'YakuHanJP';
+  src: url('../assets/fonts/YakuHanJP-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Regular - 本体フォント */
+@font-face {
+  font-family: 'NotoSansJP';
+  src: url('../assets/fonts/NotoSans_Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Bold - 本体フォント */
+@font-face {
+  font-family: 'NotoSansJP';
+  src: url('../assets/fonts/NotoSans_Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* =============================
+   Font Family設定（Yakuhan先）
+============================= */
+:root {
+  --font-base: 'YakuHanJP', 'NotoSansJP', sans-serif;
+}
+
+body {
+  font-family: 'YakuHanJP', 'NotoSansJP', sans-serif;
+}
